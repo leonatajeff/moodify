@@ -1,12 +1,17 @@
 export default function About() {
     return (
-        <div>
-            <p>
-                Moodify uses your monthly listening data to generate AI-powered art through DALL-E.
+        <div className="about">
+            <article>
+                <h3>
+                    Moodify uses your monthly listens to generate AI-powered art through DALL-E.
+                </h3>
                 <br />
                 Inspired by Receiptify
                 Created by Jefferson Leonata, Alex Gelbavicius, Daniel Sawyer, Zipan Huang.
-            </p>
+            </article>
+            <a className="code-button" href="https://github.com/leonatajeff/moodify">
+                Check out our code!
+            </a>
         </div>
     )
 }

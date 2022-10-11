@@ -1,5 +1,6 @@
 body {
   background-color: #191414;
+  background-image: url('../public/img/bg.png');
   color: white;
 
   margin: 0;
@@ -16,4 +17,19 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a {
+  text-decoration: none;
+  margin-left: 20px;
+  margin-right: 20px;
+  color: white;
+}
+
+a.selected {
+  font-weight: 900;
+}
+
+li {
+  list-style: none
 }
