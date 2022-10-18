@@ -105,3 +105,4 @@ dist
 
 # python
 __pycache__
+env/
