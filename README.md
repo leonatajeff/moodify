@@ -6,6 +6,7 @@ For our development phase, you must add your client id and secret from the spoti
 
 ```bash
 $ cd api
+$ python3 setup.py install
 $ flask run
 ```
 
@@ -13,5 +14,6 @@ $ flask run
 
 ```bash
 $ cd client
+$ npm install
 $ npm run start
 ```
