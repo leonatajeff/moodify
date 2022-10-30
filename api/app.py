@@ -2,6 +2,7 @@ from operator import is_
 from flask import Flask, request, url_for, session, redirect
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from google.cloud import datastore
 import time
 
 app = Flask(__name__)
@@ -9,6 +10,9 @@ app = Flask(__name__)
 app.secret_key = "19u2h31289ias" # this is random, ignore for now.
 app.config['SESSION_COOKIE_NAME'] = 'test cookie'
 TOKEN_INFO = 'token_info'
+
+def get_client():
+    return datastore.Client()
 
 @app.route('/')
 def login():
