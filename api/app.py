@@ -38,6 +38,20 @@ def getTracks():
         return redirect('/')
         
     sp = spotipy.Spotify(auth=token_info['access_token'])
+    
+    # database addition logic
+    # user_info = sp.me() - retrieve user info (also could use sp.current_user())
+    # username = user_info['display_name']
+    # we could use the username as the entity's ID for future retrieval
+    # client = get_client()
+    # newkey = client.key('SpotifyUser', username)
+    # spotifyuser = datastore.Entity(key = newkey)
+    # spotifyuser['username'] = username
+    # spotifyuser['imagePath'] = 
+    # spotifyuser['favGenre'] = 
+    # client.put(spotifyuser)
+
+
     return str(sp.current_user_saved_tracks(limit=50, offset=0)['items'])
 
 def get_token():
