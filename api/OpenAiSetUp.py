@@ -24,17 +24,3 @@ print (response)
 
 
 
-
-# openai.api_key = os.getenv("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")
-
-# prompt = ("Escribe un artículo sobre las zapatillas Air Jordan")
-
-# response = openai.Completion.create(
-#      engine="text -davinci-02",
-#      prompt=prompt,
-#      temperature=0.7,
-#      max_tokens=300
-#  )
-
-# print(response)
-
