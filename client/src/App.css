@@ -1,71 +1,67 @@
+.navbar {
+  margin-top: 102px;
+  border-radius: 36px;
+  padding: 20px;
+  background: #312D2B;
+  opacity: 70%;
+  color: #fff;  
+  top: 102px;
+  text-decoration: none;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
 .moodify-header {
   font-style: normal;
   font-weight: 900;
   font-size: 96px;
   line-height: 135px;
-  text-align: center;
   text-transform: uppercase;
+  margin: 0;
 }
 
 .moodify-subheader {
   font-weight: 400;
-  margin-top: -70px;
-  text-align: center;
+  margin-bottom: 22px;
+  margin-top: 0px;
 }
 
 .spotify-button {
   font: bold 11px;
   font-weight: 700;
   text-decoration: none;
-  text-align: center;
   background-color: #1ED760;
   color: #191414;
   border-radius: 24px;
   height: 41px;
   top: 454px;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  border: none;
+  margin-top: 22px;
+}
+
+.login-text {
+  padding: 20px;
 }
 
 .code-button {
   font: bold 11px;
   font-weight: 700;
   text-decoration: none;
-  text-align: center;
   background-color: #248AFF;
   color: white;
   border-radius: 24px;
   height: 41px;
-  display: flex;
-  justify-content: center;
   align-items: center;
   margin-top: 70px;
 }
 
-.navbar {
-  margin-top: 102px;
-  border-radius: 36px;
-  align-items: center;
-  padding: 20px;
-  background: #312D2B;
-  opacity: 70%;
-  color: #fff;  
-  width: 600px;
-  top: 102px;
-  text-decoration: none
-}
-
 .generation {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  text-align: center;
 }
 
 .about {
   width: 600px;
-  text-align: center;
   margin-top: 100px;
 }

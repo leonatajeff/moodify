@@ -1,20 +1,20 @@
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Generate from "./pages/Generate";
+import Home from "./pages/Home";
 import About from "./pages/About";
 import Community from "./pages/Community";
 import Navbar from "./components/Navbar";
-import Results from "./pages/Results";
+import Result from './pages/Result';
 
 function App() {
   return (
     <BrowserRouter>
     <Navbar />
       <Routes>
-          <Route exact path='/' element={<Generate />}/>
+          <Route exact path='/' element={<Home />}/>
           <Route path='/About' element={<About />}/>
           <Route path='/Community' element={<Community />}/>
-          <Route path='/Results' element={<Results />}/>
+          <Route path='/Result' element={<Result />}/>
       </Routes>
     </BrowserRouter>
   );

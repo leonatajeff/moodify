@@ -1,15 +1,11 @@
 import axios from "axios";
 
-
-function getData() {
+export default function authorize() {
     axios({
         method: "GET",
-        url: "/login",
-    })
-        .then((response) => {
-            // use a loading page while image generation is happening
-            // finish image generation.
-            // go to results page with image.
+        url: "/authorize",
+    }).then((response) => {
+            response.json()
         }).catch((error) => {
             if (error.response) {
                 console.log(error.response)
@@ -18,5 +14,6 @@ function getData() {
             }
         })
 }
+const jsonURL = authorize();
 
-module.exports = getData;
+export const loginUrl = jsonURL['auth_endpoint'];

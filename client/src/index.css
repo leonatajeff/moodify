@@ -9,9 +9,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 code {
@@ -24,12 +21,9 @@ a {
   margin-left: 20px;
   margin-right: 20px;
   color: white;
+  
 }
 
 a.selected {
   font-weight: 900;
-}
-
-li {
-  list-style: none
 }
