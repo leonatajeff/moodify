@@ -7,8 +7,8 @@ from google.cloud import datastore
 
 app = Flask(__name__)
 
-CLIENT_ID="606c383fe48b4ba89afc1bdecd6f932f"
-CLIENT_SECRET="7a97aff89abe4e0ba98e6401734c24b0"
+CLIENT_ID=""
+CLIENT_SECRET=""
 REDIRECT_URI="http://localhost:3000"
 PERMISSIONS="user-library-read"
 app.config.update(SECRET_KEY=CLIENT_SECRET)
