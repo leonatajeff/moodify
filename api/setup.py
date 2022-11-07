@@ -6,6 +6,7 @@ requires = [
     'pandas',
     'pathlib',
     'google-cloud-datastore'
+    'google-cloud-storage'
 ]
 
 setup(

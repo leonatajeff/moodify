@@ -3,11 +3,12 @@ from flask import Flask, request, json, session, redirect, jsonify
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from google.cloud import datastore
+# from google.cloud import storage
 
 app = Flask(__name__)
 
-CLIENT_ID=""
-CLIENT_SECRET=""
+CLIENT_ID="606c383fe48b4ba89afc1bdecd6f932f"
+CLIENT_SECRET="7a97aff89abe4e0ba98e6401734c24b0"
 REDIRECT_URI="http://localhost:3000"
 PERMISSIONS="user-library-read"
 app.config.update(SECRET_KEY=CLIENT_SECRET)
@@ -15,6 +16,9 @@ sp_oauth = SpotifyOAuth( CLIENT_ID, CLIENT_SECRET,REDIRECT_URI,scope=PERMISSIONS
 
 def get_client():
     return datastore.Client()
+
+#def get_storage_client():
+#    return storage.Client()
 
 @app.route('/authorize')
 def login():
@@ -32,22 +36,23 @@ def register_token():
 
 @app.route('/images')
 def fetchImages():
+
     client = get_client()
     query = client.query(kind = "SpotifyUser")
     #basically just fetches every user entity, note we can use limit = n in the query.fetch() 
     #                                   call to set a cap on how many images we display
     
     results = list(query.fetch())
-    urlList = []
+    imageList = []
 
     for user in results:
         # print(user["imageUrl"])
-        urlList.append(user["imageUrl"])
+        imageList.append(user["imagePath"])
 
     # print(urlList)
     
     return jsonify({
-      'imageUrl' : urlList
+      'imagePath' : imageList
     })
 
     #return jsonify({
