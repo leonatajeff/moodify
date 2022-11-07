@@ -3,6 +3,7 @@ import time
 from flask import Flask, request, json, session, redirect, jsonify
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from google.cloud import datastore
 
 app = Flask(__name__)
 
@@ -12,6 +13,21 @@ REDIRECT_URI="http://localhost:3000"
 PERMISSIONS="user-library-read"
 app.config.update(SECRET_KEY=CLIENT_SECRET)
 sp_oauth = SpotifyOAuth( CLIENT_ID, CLIENT_SECRET,REDIRECT_URI,scope=PERMISSIONS,cache_path='.spotipyoauthcache' )
+
+def get_client():
+    return datastore.Client()
+
+@app.route('/images')
+def fetchImages():
+    client = get_client()
+    query = client.query(kind = "SpotifyUser")
+    #basically just fetches every user entity, note we can use limit = n in the query.fetch() 
+    #                                   call to set a cap on how many images we display
+    
+    results = list(query.fetch())
+    return jsonify({
+        'imageUrl' : results['imageUrl']
+    })
 
 @app.route('/authorize')
 def login():
@@ -30,7 +46,7 @@ def register_token():
 def check_token():
     token_info = session.get('token_info', None)
     if not token_info:
-        raise 'exception'
+        raise Exception("Token error")
     now = int(time.time())
     is_expired = token_info['expires_at'] - now < 60
     if (is_expired):
