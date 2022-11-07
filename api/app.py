@@ -30,17 +30,6 @@ def register_token():
     session['token_info'] = token_info
     return token_info
 
-def check_token():
-    token_info = session.get('token_info', None)
-    if not token_info:
-        raise Exception("Token error")
-    now = int(time.time())
-    is_expired = token_info['expires_at'] - now < 60
-    if (is_expired):
-        token_info = sp_oauth.refresh_access_token(token_info['refresh_token'])
-
-    return token_info
-
 @app.route('/images')
 def fetchImages():
     client = get_client()
@@ -98,6 +87,17 @@ def get_prompts():
     #top_track_features = get_audio_feature(id_top_track)
     #gen_string = image_gen_string(top_track_features, song_top_track, artist_top_track)
     return genres
+   
+def check_token():
+    token_info = session.get('token_info', None)
+    if not token_info:
+        raise Exception("Token error")
+    now = int(time.time())
+    is_expired = token_info['expires_at'] - now < 60
+    if (is_expired):
+        token_info = sp_oauth.refresh_access_token(token_info['refresh_token'])
+
+    return token_info
 
 '''
     Logic for data from Spotify
@@ -105,6 +105,7 @@ def get_prompts():
     I can do redirect in js but not python.... oops 
     We probably dont have to refine anything crazy until milestone 3
     For now I will provide strings for the users top track and create strings from that piece of data
+
 '''
 def get_user_top_tracks(token_info):
     '''
@@ -116,7 +117,7 @@ def get_user_top_tracks(token_info):
     sp = spotipy.Spotify(auth=token_info['access_token'])
     
     resp_json = sp.current_user_top_tracks(limit=5, offset=0, time_range='medium_term')
-
+    
     # Parsing the user's top 5 tracks 
     list_of_results = resp_json['items']
     list_artist_names   = [] # list of artist names
@@ -215,5 +216,4 @@ def image_gen_string(audio_info, song_title, artist_name):
                 }
             ]
         }
-
 '''
