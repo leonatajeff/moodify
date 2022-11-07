@@ -7,8 +7,8 @@ from google.cloud import datastore
 
 app = Flask(__name__)
 
-CLIENT_ID=""
-CLIENT_SECRET=""
+CLIENT_ID="606c383fe48b4ba89afc1bdecd6f932f"
+CLIENT_SECRET="7a97aff89abe4e0ba98e6401734c24b0"
 REDIRECT_URI="http://localhost:3000"
 PERMISSIONS="user-library-read"
 app.config.update(SECRET_KEY=CLIENT_SECRET)
@@ -25,9 +25,21 @@ def fetchImages():
     #                                   call to set a cap on how many images we display
     
     results = list(query.fetch())
+    urlList = []
+
+    for user in results:
+        # print(user["imageUrl"])
+        urlList.append(user["imageUrl"])
+
+    # print(urlList)
+    
     return jsonify({
-        'imageUrl' : results['imageUrl']
+      'imageUrl' : urlList
     })
+
+    #return jsonify({
+    #    'imageUrl' : ['https://cdn.discordapp.com/attachments/1024113488483864669/1033931366573805568/unknown.png', 'https://cdn.discordapp.com/attachments/1024113488483864669/1033931000260083743/unknown.png']
+    #})    
 
 @app.route('/authorize')
 def login():
