@@ -4,7 +4,8 @@ requires = [
     'flask',
     'spotipy',
     'pandas',
-    'pathlib'
+    'pathlib',
+    'google-cloud-datastore'
 ]
 
 setup(
