@@ -1,22 +1,22 @@
 import axios from "axios"
 
 export default function Community() {
-    function fetchImages(){
-        const imageDiv = document.getElementById('Images');
-         // const imageUrls = await axios.get('/images');
-        const testArray = ['https://cdn.discordapp.com/attachments/1024113488483864669/1033931366573805568/unknown.png', 'https://cdn.discordapp.com/attachments/1024113488483864669/1033931000260083743/unknown.png']
-        // const imageArray = imageUrls.data['imageUrl'];
+    async function fetchImages(){
+        // const imageDiv = document.getElementById('Images');
+        const imageUrls = await axios.get('/images');
+        // const testArray = ['https://cdn.discordapp.com/attachments/1024113488483864669/1033931366573805568/unknown.png', 'https://cdn.discordapp.com/attachments/1024113488483864669/1033931000260083743/unknown.png']
+        const imageArray = imageUrls.data['imageUrl'];
         
         const img1 = document.getElementById('test1');
         const img2 = document.getElementById('test2');
 
         const testImages = [img1, img2]
 
-        let imagesHtml = '' + testArray.length;
+        // let imagesHtml = '' + testArray.length;
 
-        for (let i = 0; i < testArray.length; i++) {
-            const imageUrl = testArray[i];
-            imagesHtml += '<img alt = mood' + imageUrl + ' src = ' + imageUrl +  '/> \n';
+        for (let i = 0; i < imageArray.length; i++) {
+            const imageUrl = imageArray[i];
+            // imagesHtml += '<img alt = mood' + imageUrl + ' src = ' + imageUrl +  '/> \n';
             testImages[i].src = imageUrl;
             testImages[i].style.display = "block";
         }
@@ -26,6 +26,7 @@ export default function Community() {
         
 
         // imageDiv.innerHTML = imagesHtml; 
+        // imageDiv.innerHTML = '<p> ' + imageArray[0] + ' ' + imageArray[1] + '</p>'
     };
 
     return (
@@ -51,7 +52,6 @@ export default function Community() {
 
             <div id="Images" onLoad = {fetchImages}></div>
 
-            
             <img id = "test1" alt = "test1" hidden/>
             <img id = "test2" alt = "test2" hidden/>
         </div>
