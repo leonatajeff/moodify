@@ -14,7 +14,7 @@ export default function Community() {
 
         // let imagesHtml = '' + testArray.length;
 
-        // imageArray contains path names /image/username.png relative to https://storage.cloud.google.com/cs1520moodify.appspot.com
+        // imageArray contains path names /image/username.png relative to https://storage.googleapis.com/cs1520moodify.appspot.com
         for (let i = 0; i < imageArray.length; i++) {
             const imageUrl = 'https://storage.googleapis.com/cs1520moodify.appspot.com' + imageArray[i];
             // imagesHtml += '<img alt = mood' + imageUrl + ' src = ' + imageUrl +  '/> \n';
