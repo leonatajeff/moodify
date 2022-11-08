@@ -5,13 +5,9 @@ We are developing a web app inspired by https://receiptify.herokuapp.com/ in GAE
 Our data will be stored with google datastore.
 
 1) Configure your project to cs1520moodify
-2) Start the development server
-3) Initialize the environment
 
 ```bash
 $ gcloud config set project cs1520moodify
-$ gcloud beta emulators datastore start &
-$ $(gcloud beta emulators datastore env-init)
 ```
 
 
