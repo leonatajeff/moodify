@@ -16,7 +16,11 @@ $ $(gcloud beta emulators datastore env-init)
 
 
 ## ⛷ Run the backend
-For our development phase, you must add your client id and secret from the spotify dashboard for the API to work. We do not have dynamic login yet.
+For our development phase, you must add your client id and secret from the spotify dashboard for the API to work. Also depending on your development environment, you must add the appropriate redirect URIs (where can Spotify.com go after verification?) 
+
+[Example of a Spotify Redirect URI List](https://user-images.githubusercontent.com/42332446/200457221-f1236cea-b44a-4050-adf6-7513b8d10963.png)
+
+We do not have dynamic login yet.
 
 ```bash
 $ cd api
@@ -29,5 +33,6 @@ $ flask run
 ```bash
 $ cd client
 $ npm install
-$ npm run start
+$ npm run start!
+
 ```
