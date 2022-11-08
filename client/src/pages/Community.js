@@ -1,33 +1,27 @@
 import axios from "axios"
+import {useState} from "react"
+import { Gallery } from "react-grid-gallery";
+
 
 export default function Community() {
+
+    // Set the image data before any rendering happens.
+    const [images, setImages] = useState(() => {
+        return fetchImages();
+    })
+
     async function fetchImages(){
-        // const imageDiv = document.getElementById('Images');
-        const imageUrls = await axios.get('/images');
-        // const testArray = ['https://cdn.discordapp.com/attachments/1024113488483864669/1033931366573805568/unknown.png', 'https://cdn.discordapp.com/attachments/1024113488483864669/1033931000260083743/unknown.png']
-        const imageArray = imageUrls.data['imagePath'];
-        
-        const img1 = document.getElementById('test1');
-        const img2 = document.getElementById('test2');
-
-        const testImages = [img1, img2]
-
-        // let imagesHtml = '' + testArray.length;
-
+        let imageData = []
+        const images = await axios.get('/images');
+        const rawImageUrls = images.data['imagePath'];
         // imageArray contains path names /image/username.png relative to https://storage.googleapis.com/cs1520moodify.appspot.com
-        for (let i = 0; i < imageArray.length; i++) {
-            const imageUrl = 'https://storage.googleapis.com/cs1520moodify.appspot.com' + imageArray[i];
-            // imagesHtml += '<img alt = mood' + imageUrl + ' src = ' + imageUrl +  '/> \n';
-            testImages[i].src = imageUrl;
-            testImages[i].style.display = "block";
+
+        for (let i = 0; i < rawImageUrls.length; i++) {
+            const fullUrl = 'https://storage.googleapis.com/cs1520moodify.appspot.com' + rawImageUrls[i];
+            imageData.push({src: fullUrl});
         }
-
-        const button1 = document.getElementById('button');
-        button1.style.display = "none"
         
-
-        // imageDiv.innerHTML = imagesHtml; 
-        // imageDiv.innerHTML = '<p> ' + imageArray[0] + ' ' + imageArray[1] + '</p>'
+        setImages(imageData);
     };
 
     return (
@@ -38,23 +32,8 @@ export default function Community() {
                 </h3>
                 <br />
             </article>
-            <p>To be implemented... Along with some other upcoming features</p>
-            <ul>
-                <li> Test </li>
-                <li>Spotify Integration</li>
-                <li>Stable Diffusion Library</li>
-                <li>Javascript Optimization</li>
-                <li>Flask API Interface</li>
-            </ul>
 
-            <button id = "button" onClick = {fetchImages}>
-                <text> View Images </text>
-            </button> 
-
-            <div id="Images" onLoad = {fetchImages}></div>
-
-            <img id = "test1" alt = "test1" hidden/>
-            <img id = "test2" alt = "test2" hidden/>
+            <Gallery images={images} />
         </div>
         // basically, we should just create a template to hold n images that we want to retrieve from the databse, 
         // then in the function call we can update up src's accordingly
