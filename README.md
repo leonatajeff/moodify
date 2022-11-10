@@ -1,22 +1,30 @@
 # moodify
 We are developing a web app inspired by https://receiptify.herokuapp.com/ in GAE and Flask for CS1520. 
 
-# Setting up the production environment:
-
-## GAE
-
-```bash
-$ dev_appserver.py app.yaml
-```
+# Setting up the GAE-Hosted Environment:
 
 ## Cloud datastore
-Our data will be stored with google datastore.
-
-1) Configure your project to cs1520moodify
+To properly interact with any server data, ensure the project is set to the `cs1520moodify` cloud instance.
 
 ```bash
 $ gcloud config set project cs1520moodify
 ```
+
+## GAE
+
+1) Set up CLIENT_ID and CLIENT_SECRET in main.py (a more secure way to store keys and secrets will be implemented soon)
+1) In your terminal, go to `/client/` folder
+
+Run below CLI commands
+```bash
+$ npm i
+$ npm run create-deployable
+$ cd api
+$ dev_appserver.py app.yaml
+```
+2) Open web preview. 
+- Add a url to the redirect uri(s) in your spotify dashboard.
+- Set the url to the redirect uri in `main.py`
 
 
 # Setting up the local development environment
