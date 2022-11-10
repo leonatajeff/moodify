@@ -106,3 +106,6 @@ dist
 # python
 __pycache__
 env/
+
+# secret stuff
+env_variables.yaml

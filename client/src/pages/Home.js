@@ -8,7 +8,7 @@ let responseCode = {
 };
 export default function Home() {
   const handleLogin = async () => {
-    const loginUrl = await axios.get("/authorize");
+    const loginUrl = await axios.get("/api/authorize");
     window.location.href = loginUrl.data["auth_endpoint"];
   };
 
@@ -27,7 +27,7 @@ export default function Home() {
           />
           {console.log(
             axios
-              .post("/registerToken", responseCode)
+              .post("/api/registerToken", responseCode)
               .then(axios.get("/getPrompt"))
           )}
         </div>

@@ -1,6 +1,11 @@
 flask
+python-dotenv
 spotipy
 pandas
 pathlib
 google-cloud-datastore
 google-cloud-storage
+Image
+werkzeug
+requests
+Pillow

@@ -9,11 +9,11 @@ from PIL import Image
 from io import BytesIO
 import requests
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../build", static_url_path='/')
 
-CLIENT_ID="606c383fe48b4ba89afc1bdecd6f932f"
-CLIENT_SECRET="7a97aff89abe4e0ba98e6401734c24b0"
-REDIRECT_URI="https://3001-cs-388984037072-default.cs-us-east1-pkhd.cloudshell.dev/"
+CLIENT_ID=""
+CLIENT_SECRET=""
+REDIRECT_URI="https://8080-cs-184908628077-default.cs-us-east1-vpcf.cloudshell.dev/"
 PERMISSIONS="user-library-read"
 app.config.update(SECRET_KEY=CLIENT_SECRET)
 sp_oauth = SpotifyOAuth( CLIENT_ID, CLIENT_SECRET,REDIRECT_URI,scope=PERMISSIONS,cache_path='.spotipyoauthcache' )
@@ -24,21 +24,25 @@ def get_datastore_client():
 def get_storage_client():
     return storage.Client()
 
-@app.route('/authorize')
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+    
+@app.route('/api/authorize')
 def login():
     auth_url = sp_oauth.get_authorize_url()
     return jsonify({
         'auth_endpoint': auth_url
     })
 
-@app.route('/registerToken', methods=['POST'])
+@app.route('/api/registerToken', methods=['POST'])
 def register_token():
     data = json.loads(request.data) 
     token_info = sp_oauth.get_access_token(data['code'])
     session['token_info'] = token_info
     return token_info
 
-@app.route('/uploadTest')
+@app.route('/api/uploadTest')
 def uploadImages():
     # this code will probably end up being injected into our image generation chunk, but i'll just throw it here for now
 
@@ -81,7 +85,7 @@ def uploadImages():
     fs.seek(0)
     blob.upload_from_file(fs)    
 
-@app.route('/images')
+@app.route('/api/images')
 def fetchImages():
     # set the datastore and the storage clients
     datastoreClient = get_datastore_client()
@@ -164,7 +168,7 @@ def fetchImages():
     #    'imageUrl' : ['https://cdn.discordapp.com/attachments/1024113488483864669/1033931366573805568/unknown.png', 'https://cdn.discordapp.com/attachments/1024113488483864669/1033931000260083743/unknown.png']
     #})    
 
-@app.route('/getPrompt', methods=['GET'])
+@app.route('/api/getPrompt', methods=['GET'])
 def get_prompt():
     try:
         token_info = check_token()
@@ -178,7 +182,7 @@ def get_prompt():
         print(track['name'] + ' - ' + track['artists'][0]['name'])
     return results
 
-@app.route('/prompt', methods=['GET'])
+@app.route('/api/prompt', methods=['GET'])
 def get_prompts():
     try:
         token_info = check_token()

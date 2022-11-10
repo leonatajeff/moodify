@@ -1,7 +1,0 @@
-README.md
-setup.py
-Moodify.egg-info/PKG-INFO
-Moodify.egg-info/SOURCES.txt
-Moodify.egg-info/dependency_links.txt
-Moodify.egg-info/requires.txt
-Moodify.egg-info/top_level.txt
