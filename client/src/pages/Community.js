@@ -12,7 +12,7 @@ export default function Community() {
 
   async function fetchImages() {
     let imageData = [];
-    const images = await axios.get("/images");
+    const images = await axios.get("/api/images");
     const rawImageUrls = images.data["imagePath"];
     // imageArray contains path names /image/username.png relative to https://storage.googleapis.com/cs1520moodify.appspot.com
 
