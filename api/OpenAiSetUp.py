@@ -2,7 +2,7 @@ import OpenAiSetUp
 import openai 
 import os
 
-openai.api_key = "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"
+openai.api_key = ""
 # personal key
 
 prompt = "say this is a test"
