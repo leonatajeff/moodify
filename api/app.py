@@ -11,9 +11,9 @@ import requests
 
 app = Flask(__name__)
 
-CLIENT_ID=""
-CLIENT_SECRET=""
-REDIRECT_URI="http://localhost:3000"
+CLIENT_ID="606c383fe48b4ba89afc1bdecd6f932f"
+CLIENT_SECRET="7a97aff89abe4e0ba98e6401734c24b0"
+REDIRECT_URI="https://3001-cs-388984037072-default.cs-us-east1-pkhd.cloudshell.dev/"
 PERMISSIONS="user-library-read"
 app.config.update(SECRET_KEY=CLIENT_SECRET)
 sp_oauth = SpotifyOAuth( CLIENT_ID, CLIENT_SECRET,REDIRECT_URI,scope=PERMISSIONS,cache_path='.spotipyoauthcache' )
@@ -105,10 +105,23 @@ def fetchImages():
     
 
     # uploading the image to the cs1520moodify.appspot.com bucket
+    imageRequest = requests.get(imageUrl)
+
+    userImage = Image.open(BytesIO(imageRequest.content))
+    userImage.show()
+
+    fs = FileStorage()
+
+    userImage.save(fs, 'png')
+
+    Image.open(fs).show()
+
     bucket = storageClient.bucket("cs1520moodify.appspot.com")
-    source_file_name = imageUrl
-    blob = bucket.blob("/images/" + username)
-    blob.upload_from_file(source_file_name)
+    # source_file_name = imageUrl
+    blob = bucket.blob("images/" + username + ".png")
+
+    fs.seek(0)
+    blob.upload_from_file(fs)
 
 
 
