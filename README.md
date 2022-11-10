@@ -19,7 +19,7 @@ $ gcloud config set project cs1520moodify
 ```
 
 
-# Setting up the local development
+# Setting up the local development environment
 
 ## ⛷ Running the backend
 For our development phase, you must add your client id and secret from the spotify dashboard for the API to work. Also depending on your development environment, you must add the appropriate redirect URIs (where can Spotify.com go after verification?) 
@@ -39,3 +39,6 @@ $ cd client
 $ npm install
 $ npm run start
 ```
+
+- [Milestone 1](https://youtu.be/dSuuu2swJ7s)
+- [Milestone 2](https://www.youtube.com/watch?v=nW4ZB0cE-kU&ab_channel=JeffersonLeonata)
