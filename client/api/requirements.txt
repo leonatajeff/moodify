@@ -9,3 +9,4 @@ Image
 werkzeug
 requests
 Pillow
+openai

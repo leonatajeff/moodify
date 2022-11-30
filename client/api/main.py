@@ -8,15 +8,16 @@ from werkzeug.datastructures import FileStorage
 from PIL import Image
 from io import BytesIO
 import requests
+import openai
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
 
 CLIENT_ID=""
 CLIENT_SECRET=""
+openai.api_key = ""
 REDIRECT_URI="https://8080-cs-184908628077-default.cs-us-east1-vpcf.cloudshell.dev/"
-PERMISSIONS="user-library-read"
+PERMISSIONS="user-library-read user-read-recently-played user-read-playback-state"
 app.config.update(SECRET_KEY=CLIENT_SECRET)
-sp_oauth = SpotifyOAuth( CLIENT_ID, CLIENT_SECRET,REDIRECT_URI,scope=PERMISSIONS,cache_path='.spotipyoauthcache' )
 
 def get_datastore_client():
     return datastore.Client()
@@ -30,6 +31,7 @@ def index():
     
 @app.route('/api/authorize')
 def login():
+    sp_oauth = create_spotify_oauth()
     auth_url = sp_oauth.get_authorize_url()
     return jsonify({
         'auth_endpoint': auth_url
@@ -38,6 +40,7 @@ def login():
 @app.route('/api/registerToken', methods=['POST'])
 def register_token():
     data = json.loads(request.data) 
+    sp_oauth = create_spotify_oauth()
     token_info = sp_oauth.get_access_token(data['code'])
     session['token_info'] = token_info
     return token_info
@@ -170,36 +173,49 @@ def fetchImages():
 
 @app.route('/api/getPrompt', methods=['GET'])
 def get_prompt():
+    '''
+        GET: Generated prompt from user's listening history
+
+        Using
+         - seed_artists - a list of artist IDs, URIs or URLs
+         - seed_tracks - a list of track IDs, URIs or URLs
+
+        Helpful References for Future Enhancement:
+        https://developer.spotify.com/console/get-audio-analysis-track/
+        https://towardsdatascience.com/reverse-engineering-spotify-wrapped-ai-using-python-452b58ad1a62
+    '''
     try:
         token_info = check_token()
     except:
         print('user not logged in')
         return redirect('/')
     sp = spotipy.Spotify(auth=token_info['access_token'])
-    results = sp.current_user_saved_tracks()
+    results = sp.current_user_recently_played(2)
+
+    song_names = []
+
     for item in results['items']:
         track = item['track']
-        print(track['name'] + ' - ' + track['artists'][0]['name'])
-    return results
+        song_names.append(track['name'])
 
-@app.route('/api/prompt', methods=['GET'])
-def get_prompts():
-    try:
-        token_info = check_token()
-    except:
-        print('user not logged in')
-        return redirect('/')
-        
-    user_track_info = get_user_top_tracks(token_info)
-    # Parsing through the API call for specific data to get genres
-    id_top_track = user_track_info.get("song_id")
-    uri_top_artist = user_track_info.get("artist_uri")
+    prompt = "An impressionist painting of " + song_names[0] + " " + song_names[1]
 
-    genres = get_top_songs_genre(id_top_track, uri_top_artist, token_info)
+    return prompt
 
-    #top_track_features = get_audio_feature(id_top_track)
-    #gen_string = image_gen_string(top_track_features, song_top_track, artist_top_track)
-    return genres
+@app.route('/api/getImage', methods=['GET'])
+def get_image():
+    # Api: Image Generation
+    # https://beta.openai.com/docs/guides/images/introduction
+    prompt = get_prompt()
+    response = openai.Image.create(
+        prompt=prompt,
+        n=1,
+        size="512x512"
+    )
+
+    image_url = response['data'][0]['url']
+    print(image_url)
+    return image_url
    
 def check_token():
     token_info = session.get('token_info', None)
@@ -208,86 +224,20 @@ def check_token():
     now = int(time.time())
     is_expired = token_info['expires_at'] - now < 60
     if (is_expired):
+        sp_oauth = create_spotify_oauth()
         token_info = sp_oauth.refresh_access_token(token_info['refresh_token'])
 
     return token_info
 
-'''
-    Logic for data from Spotify
-    I am not too sure how to connect this to the front-end
-    I can do redirect in js but not python.... oops 
-    We probably dont have to refine anything crazy until milestone 3
-    For now I will provide strings for the users top track and create strings from that piece of data
-
-'''
-def get_user_top_tracks(token_info):
-    '''
-        Gets the user top tracks based on query from endpoint.
-        For limit, offset, time_range... I will make cleaner query variable to adjust 
-        without changing link manaully
-    '''
-        
-    sp = spotipy.Spotify(auth=token_info['access_token'])
-    
-    resp_json = sp.current_user_top_tracks(limit=5, offset=0, time_range='medium_term')
-    
-    # Parsing the user's top 5 tracks 
-    list_of_results = resp_json['items']
-    list_artist_names   = [] # list of artist names
-    list_song_names     = [] # list of top song names
-    list_song_ids       = [] # id of the song to use for further data e.g) audio_features endpoint
-    list_artist_uri     = [] # artist's resource identifier in Spotify's database
-
-    for result in list_of_results:
-        curr_artist = result['album']['artists'][0]['name']
-        curr_song = result['name']
-        curr_id = result['album']['artists'][0]['id']
-        curr_artist_uri = result['album']['artists'][0]['uri']
-        list_artist_names.append(curr_artist)
-        list_song_names.append(curr_song)
-        list_song_ids.append(curr_id)
-        list_artist_uri.append(curr_artist_uri)
-
-    '''
-        I will probably restructure this... ?
-        Looks like this: 
-            {
-                song: [song1,song2,song3,song4],
-                artist: [artistOfSong1, artistOfSong2, artistOfSong3, artistOfSong4],
-                song_id: [idOfSong1, idOfSong2, idOfSong3, idOfSong4],
-                artist_uri: [uri1, uri2, uri3, uri4]
-            }    
-    '''
-    top_track_info = {
-        "song": list_song_names,
-        "artist": list_artist_names,
-        "song_id": list_song_ids,
-        "artist_uri": list_artist_uri
-    }   
-
-    
-    return top_track_info
-
-def get_top_songs_genre(song_ids, artist_ids, token_info):
-    '''
-    We're . This will generate a list of genres based on songs entered. 
-
-    Genre seeds are just genre titles that spotify uses to generate a set of recommendations
-    https://developer.spotify.com/documentation/web-api/reference/#/operations/get-recommendation-genres
-
-    recommendations(seed_artists=None, seed_genres=None, seed_tracks=None, limit=20, country=None, **kwargs)
-        Get a list of recommended tracks for one to five seeds. (at least one of seed_artists, seed_tracks and seed_genres are needed)
-    recommendation_genre_seeds()
-        Get a list of genres available for the recommendations function.
-    USE ART MOVEMENTS AND DESCRIPTORS LIKE ABSTRACT, ETC.
-    '''
-        
-    sp = spotipy.Spotify(auth=token_info['access_token'])
-
-    genres = sp.recommendation_genre_seeds()
-    refined_genres = sp.recommendations(song_ids, artist_ids, genres, limit=1)
-    prompt_string = refined_genres + " abstract" + " digital art"
-    return prompt_string
+# Universal Functions
+def create_spotify_oauth():
+  return SpotifyOAuth(
+    client_id = CLIENT_ID,
+    client_secret = CLIENT_SECRET,
+    redirect_uri=REDIRECT_URI,
+    scope=PERMISSIONS,
+    cache_path='.spotipyoauthcache'
+    )
 
 '''
 def get_audio_feature(top_track_id):

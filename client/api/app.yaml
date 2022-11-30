@@ -1,8 +1,8 @@
 runtime: python38
 
 handlers:
-- url: /static
-  static_dir: build/static
-- url: /(.*\.(json|ico|js|html))$
-  static_files: build/\1
-  upload: build/.*\.(json|ico|js|html)$
+  - url: /static
+    static_dir: build/static
+  - url: /(.*\.(json|ico|js|html))$
+    static_files: build/\1
+    upload: build/.*\.(json|ico|js|html)$
