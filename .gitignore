@@ -109,3 +109,4 @@ env/
 
 # secret stuff
 env_variables.yaml
+.spotipyoauthcache
