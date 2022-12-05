@@ -18,7 +18,7 @@ export default function Home() {
         <Result />
       ) : (
         <button className="spotify-button" onClick={handleLogin}>
-          <text className="login-text"> LOGIN WITH SPOTIFY </text>
+          <text className="login-text"> Login with Spotify </text>
         </button>
       )}
     </div>
