@@ -23,16 +23,38 @@ header {
   padding-top: 10px;
 }
 
-.donate-header {
+.donate-nav {
     width:  100vh;
     display: flex;
     justify-content: flex-end;
 }
 
-.donate-header-button {
+.donate-nav-button {
   background: #4c4846;
   border-radius: 36px;
   padding: 10px 22px 10px 22px;
+}
+
+.donate {
+  padding-top: 164px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 670px;
+  text-align: center;
+}
+
+.donate-btn {
+  font: bold 11px;
+  font-weight: 700;
+  text-decoration: none;
+  background-color: #1ed760;
+  color: white;
+  border-radius: 10px;
+  height: 41px;
+  align-items: center;
+  border: none;
+  margin-top: 22px;
+  padding: 0 22px 0 22px;
 }
 
 .moodify-header {

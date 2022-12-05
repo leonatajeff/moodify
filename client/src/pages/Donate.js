@@ -8,8 +8,8 @@ export default function Donate() {
                 make Moodify better every day. If you would like to support us,
                 you can donate to us through the link below.
             </p>    
-            <button className="donate-button" href="https://www.paypal.com/donate?hosted_button_id=ZT2ZQZQZQZQZQ">
-                <text className="donate-text"> Donate </text>
+            <button className="donate-btn" href="https://www.paypal.com/donate?hosted_button_id=ZT2ZQZQZQZQZQ">
+                <text className="donate-text"> Send Fake Money </text>
             </button>
         </div>
     );
