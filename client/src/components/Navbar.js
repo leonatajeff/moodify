@@ -10,7 +10,9 @@ export default function Navbar() {
         <NavLink to="/Community">Community</NavLink>
       </div>
       <div className="donate-nav">
-        <NavLink className="donate-nav-button" to="/Donate">Send Love</NavLink>  
+        <NavLink className="donate-nav-button" to="/Donate">
+          Send Love
+        </NavLink>
       </div>
     </div>
   );

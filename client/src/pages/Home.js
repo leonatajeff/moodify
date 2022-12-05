@@ -13,7 +13,10 @@ export default function Home() {
 
   return (
     <div className="generation">
-      <h1 className="moodify-header"> Moodify, visualize your listening history with Artifical Intelligence </h1>
+      <h1 className="moodify-header">
+        {" "}
+        Moodify, visualize your listening history with Artifical Intelligence{" "}
+      </h1>
       {code ? (
         <Result />
       ) : (

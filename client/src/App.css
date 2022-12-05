@@ -24,9 +24,9 @@ header {
 }
 
 .donate-nav {
-    width:  100vh;
-    display: flex;
-    justify-content: flex-end;
+  width: 100vh;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .donate-nav-button {
@@ -63,8 +63,8 @@ header {
   padding-top: 164px;
   font-size: 36px;
   margin: 0;
-  margin-left: 27%;
-  margin-right: 27%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .moodify-subheader {
@@ -120,20 +120,19 @@ header {
   max-width: 900px;
   max-height: 230px;
   margin-left: auto;
-  margin-right: auto; 
+  margin-right: auto;
 }
 
 .about-header {
   font-size: 36px;
   font-family: "CircularSpotifyText-Medium", -apple-system, BlinkMacSystemFont,
-  "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-  "Droid Sans", "Helvetica Neue", sans-serif;
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 .about-description {
   font-size: 24px;
-  font-family: "CircularSpotifyText-Light", -apple-system, BlinkMacSystemFont,
-
+  font-family: "CircularSpotifyText-Light", -apple-system, BlinkMacSystemFont;
 }
 
 .community {
