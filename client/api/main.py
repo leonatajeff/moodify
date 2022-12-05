@@ -2,13 +2,9 @@ import time
 from flask import Flask, request, json, session, redirect, jsonify
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from google.cloud import datastore
-from google.cloud import storage
-from werkzeug.datastructures import FileStorage 
-from PIL import Image
-from io import BytesIO
 import requests
 import openai
+import databaseManager
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
 
@@ -19,11 +15,7 @@ REDIRECT_URI="https://8080-cs-184908628077-default.cs-us-east1-vpcf.cloudshell.d
 PERMISSIONS="user-library-read user-read-recently-played user-read-playback-state"
 app.config.update(SECRET_KEY=CLIENT_SECRET)
 
-def get_datastore_client():
-    return datastore.Client()
 
-def get_storage_client():
-    return storage.Client()
 
 @app.route('/')
 def index():
@@ -50,126 +42,22 @@ def uploadImages():
     # this code will probably end up being injected into our image generation chunk, but i'll just throw it here for now
 
     # uploads an image from a url - which is how we retrieve the generated image from the API
-    # set the datastore and the storage clients
-    datastoreClient = get_datastore_client()
-    storageClient = get_storage_client()
 
     # dummy data for demonstration purposes - we will get this data from the spotify api
     username = "testuser1"
     favGenre = 'rock'
+    prompt = 'beach house space song'
     imageUrl = 'https://cdn.discordapp.com/attachments/1024113488483864669/1033931366573805568/unknown.png'
+    
         
     # NOTE: upload code will be moved to the image generation route of the api
 
-    # uploading to datastore
-    newkey = datastoreClient.key('SpotifyUser', username)
-    spotifyUser = datastore.Entity(key = newkey)
-    spotifyUser['username'] = username
-    spotifyUser['imagePath'] = '/images/' + username
-    spotifyUser['favGenre'] = favGenre
-    datastoreClient.put(spotifyUser)
-
-    # uploading the image to the cs1520moodify.appspot.com bucket
-    imageRequest = requests.get(imageUrl)
-
-    userImage = Image.open(BytesIO(imageRequest.content))
-    userImage.show()
-
-    fs = FileStorage()
-
-    userImage.save(fs, 'png')
-
-    Image.open(fs).show()
-
-    bucket = storageClient.bucket("cs1520moodify.appspot.com")
-    # source_file_name = imageUrl
-    blob = bucket.blob("images/" + username + ".png")
-
-    fs.seek(0)
-    blob.upload_from_file(fs)    
+    databaseManager.upload(username, favGenre, prompt, imageUrl)
 
 @app.route('/api/images')
 def fetchImages():
-    # set the datastore and the storage clients
-    datastoreClient = get_datastore_client()
-    storageClient = get_storage_client()
-
-    # dummy data for demonstration purposes - we will get this data from the spotify api
-    username = "testuser1"
-    favGenre = 'rock'
-    imageUrl = 'https://cdn.discordapp.com/attachments/1024113488483864669/1033931366573805568/unknown.png'
-    
-    # NOTE: upload code will be moved to the image generation route of the api
-
-    # uploading to datastore
-    newkey = datastoreClient.key('SpotifyUser', username)
-    spotifyUser = datastore.Entity(key = newkey)
-    spotifyUser['username'] = username
-    spotifyUser['imagePath'] = '/images/' + username
-    spotifyUser['favGenre'] = favGenre
-    datastoreClient.put(spotifyUser)
-
-    
-
-    # uploading the image to the cs1520moodify.appspot.com bucket
-    imageRequest = requests.get(imageUrl)
-
-    userImage = Image.open(BytesIO(imageRequest.content))
-    userImage.show()
-
-    fs = FileStorage()
-
-    userImage.save(fs, 'png')
-
-    Image.open(fs).show()
-
-    bucket = storageClient.bucket("cs1520moodify.appspot.com")
-    # source_file_name = imageUrl
-    blob = bucket.blob("images/" + username + ".png")
-
-    fs.seek(0)
-    blob.upload_from_file(fs)
-
-
-
-
-
-    # Uploading data
-
-    # database addition logic
-    # user_info = sp.me() - retrieve user info (also could use sp.current_user())
-    # username = user_info['display_name']
-    # we could use the username as the entity's ID for future retrieval
-    # client = get_client()
-    # newkey = client.key('SpotifyUser', username)
-    # spotifyuser = datastore.Entity(key = newkey)
-    # spotifyuser['username'] = username
-    # spotifyuser['imagePath'] = 
-    # spotifyuser['favGenre'] = 
-    # client.put(spotifyuser)
-
     # Retrieving data
-    
-    query = datastoreClient.query(kind = "SpotifyUser")
-    #basically just fetches every user entity, note we can use limit = n in the query.fetch() 
-    #                                   call to set a cap on how many images we display
-    
-    results = list(query.fetch())
-    imageList = []
-
-    for user in results:
-        # print(user["imageUrl"])
-        imageList.append(user["imagePath"])
-
-    # print(urlList)
-    
-    return jsonify({
-      'imagePath' : imageList
-    })
-
-    #return jsonify({
-    #    'imageUrl' : ['https://cdn.discordapp.com/attachments/1024113488483864669/1033931366573805568/unknown.png', 'https://cdn.discordapp.com/attachments/1024113488483864669/1033931000260083743/unknown.png']
-    #})    
+    return databaseManager.getImages()  
 
 @app.route('/api/getPrompt', methods=['GET'])
 def get_prompt():
@@ -215,6 +103,9 @@ def get_image():
 
     image_url = response['data'][0]['url']
     print(image_url)
+
+    ## I'm pretty sure this is where we will want to upload the user information since we have the prompt and the image url here
+    ## upload data with database manager - databaseManager.upload(username, favGenre, prompt, imageUrl)
     return image_url
    
 def check_token():
