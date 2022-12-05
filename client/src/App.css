@@ -23,13 +23,13 @@ header {
   padding-top: 10px;
 }
 
-.donate {
+.donate-header {
     width:  100vh;
     display: flex;
     justify-content: flex-end;
 }
 
-.donate-button {
+.donate-header-button {
   background: #4c4846;
   border-radius: 36px;
   padding: 10px 22px 10px 22px;

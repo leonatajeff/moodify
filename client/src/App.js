@@ -5,6 +5,7 @@ import About from "./pages/About";
 import Community from "./pages/Community";
 import Navbar from "./components/Navbar";
 import Result from "./pages/Result";
+import Donate from "./pages/Donate";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/About" element={<About />} />
         <Route path="/Community" element={<Community />} />
         <Route path="/Result" element={<Result />} />
+        <Route path="/Donate" element={<Donate />} />
       </Routes>
     </BrowserRouter>
   );
