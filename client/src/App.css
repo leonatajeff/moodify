@@ -12,12 +12,13 @@
 }
 
 .moodify-header {
-  font-style: normal;
-  font-weight: 900;
-  font-size: 96px;
-  line-height: 135px;
-  text-transform: uppercase;
+  max-width: 670px;
+  height: 98px;
+  padding-top: 22px;
+  font-size: 36px;
   margin: 0;
+  margin-left: 27%;
+  margin-right: 27%;
 }
 
 .moodify-subheader {
@@ -31,8 +32,8 @@
   font-weight: 700;
   text-decoration: none;
   background-color: #1ed760;
-  color: #191414;
-  border-radius: 24px;
+  color: white;
+  border-radius: 10px;
   height: 41px;
   top: 454px;
   align-items: center;

@@ -1,14 +1,46 @@
+@font-face {
+  font-family: "CircularSpotifyText-Black";
+  src: local("CircularSpotifyText-Black"),
+    url("./fonts/CircularSpotifyText-Black.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "CircularSpotifyText-Light";
+  src: local("CircularSpotifyText-Light"),
+    url("./fonts/CircularSpotifyText-Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "CircularSpotifyText-Medium";
+  src: local("CircularSpotifyText-Medium"),
+    url("./fonts/CircularSpotifyText-Medium.otf") format("opentype");
+}
+
 body {
-  background-color: #191414;
-  background-image: url("../public/img/bg.png");
+  height: 100vh;
+  background: rgb(7, 42, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(7, 42, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
   color: white;
+  justify-content: center;
+  align-items: center;
 
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "CircularSpotifyText-Light", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  text-align: center;
+  font-family: "CircularSpotifyText-Medium", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 code {
@@ -17,6 +49,9 @@ code {
 }
 
 a {
+  font-family: "CircularSpotifyText-Medium", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   text-decoration: none;
   margin-left: 20px;
   margin-right: 20px;
