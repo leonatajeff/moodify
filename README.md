@@ -50,3 +50,10 @@ $ npm run start
 
 - [Milestone 1](https://youtu.be/dSuuu2swJ7s)
 - [Milestone 2](https://www.youtube.com/watch?v=nW4ZB0cE-kU&ab_channel=JeffersonLeonata)
+
+## Deploying Live
+
+Work in Progress... This doesn't work yet
+
+https://cloud.google.com/build/docs/deploying-builds/deploy-appengine#yaml
+`gcloud builds submit --region=us-east1 /client/`
