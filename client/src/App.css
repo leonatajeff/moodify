@@ -1,7 +1,14 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 10%;
+}
+
 .navbar {
+  display: flex;
   margin-top: 102px;
   border-radius: 36px;
-  padding: 20px;
   background: #312d2b;
   opacity: 70%;
   color: #fff;
@@ -9,12 +16,29 @@
   text-decoration: none;
   margin-left: 20%;
   margin-right: 20%;
+  padding: 5px;
+}
+
+.navbar-text {
+  padding-top: 10px;
+}
+
+.donate {
+    width:  100vh;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.donate-button {
+  background: #4c4846;
+  border-radius: 36px;
+  padding: 10px 22px 10px 22px;
 }
 
 .moodify-header {
   max-width: 670px;
   height: 98px;
-  padding-top: 22px;
+  padding-top: 164px;
   font-size: 36px;
   margin: 0;
   margin-left: 27%;
