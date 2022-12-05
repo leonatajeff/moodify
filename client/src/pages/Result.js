@@ -12,7 +12,7 @@ import {
 } from "react-share";
 
 export default function Result(url) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [imageUrl, setImageUrl] = useState("");
   const [displaySentence, setDisplaySentence] = useState("");
 

@@ -62,11 +62,11 @@ def fetchImages():
 @app.route('/api/getPrompt', methods=['GET'])
 def get_prompt():
     '''
-        GET: Generated prompt from user's listening history
+        GET: Generated prompt from user's top listening history
 
         Using
-         - seed_artists - a list of artist IDs, URIs or URLs
-         - seed_tracks - a list of track IDs, URIs or URLs
+         - time_range: 4 weeks of listening data to determine top tracks
+         - limit: How many songs to return
 
         Helpful References for Future Enhancement:
         https://developer.spotify.com/console/get-audio-analysis-track/
@@ -77,16 +77,20 @@ def get_prompt():
     except:
         print('user not logged in')
         return redirect('/')
+
     sp = spotipy.Spotify(auth=token_info['access_token'])
-    results = sp.current_user_recently_played(2)
+    top_tracks = sp.current_user_recently_played(5)  #top tracks is broken TO-DO
 
     song_names = []
 
-    for item in results['items']:
+    for item in top_tracks['items']:
         track = item['track']
-        song_names.append(track['name'])
-
-    prompt = "An impressionist painting of " + song_names[0] + " " + song_names[1]
+        full_string = f"{track['name']} by {track['artists'][0]['name']}"
+        print(full_string)
+        song_names.append(full_string)
+   
+    # TO-DO: Does the artist name cause more harm or good to prompt generation?
+    prompt = gen_prompt_helper(song_names) #returns a string 
 
     return prompt
 
@@ -130,46 +134,24 @@ def create_spotify_oauth():
     cache_path='.spotipyoauthcache'
     )
 
-'''
-def get_audio_feature(top_track_id):
-    # Returns the audio feature data for the users top track
-    token_info = get_token()
-    sp = spotipy.Spotify(auth=token_info['access_token'])
-    audio_info = sp.audio_features(tracks=[])
+# Helper Function for Prompt Generation
+def gen_prompt_helper(list_of_songs):
+    '''
+        Helper Function that uses openai Completion to generate a prompt. 
+        Takes in a list containing the users top songs.
+    '''
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=f"\nHuman: Create a creative prompt for DALL-E image generation that describes my mood over these songs but dont list the songs in the prompt and instead replace the song names with a creative visual description about the song title: {list_of_songs[0]}, {list_of_songs[1]}, {list_of_songs[2]}, {list_of_songs[3]}, {list_of_songs[4]}",
+        temperature=0.9,
+        max_tokens=150,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0.6,
+        stop=[" Human:", " AI:"]
+        )
     
-    return audio_info
-
-def parse_audio_features()
-    # Clean up and give meaning to certain features.
-
-def image_gen_string(audio_info, song_title, artist_name):
-    song_title example -> Space Song
-    artist_name example -> Beach House
-    Example of the data we are working with here from audio_info
-        {
-            "audio_features": [
-                {
-                "acousticness": 0.00242,
-                "analysis_url": "https://api.spotify.com/v1/audio-analysis/2takcwOaAZWiXQijPHIx7B\n",
-                "danceability": 0.585, 
-                "duration_ms": 237040,
-                "energy": 0.842,
-                "id": "2takcwOaAZWiXQijPHIx7B",
-                "instrumentalness": 0.00686,
-                "key": 9,
-                "liveness": 0.0866,
-                "loudness": -5.883,
-                "mode": 0,
-                "speechiness": 0.0556,
-                "tempo": 118.211,
-                "time_signature": 4,
-                "track_href": "https://api.spotify.com/v1/tracks/2takcwOaAZWiXQijPHIx7B\n",
-                "type": "audio_features",
-                "uri": "spotify:track:2takcwOaAZWiXQijPHIx7B",
-                "valence": 0.428
-                }
-            ]
-        }
-'''
-
+    text = response["choices"][0]["text"]
+    
+    return text
 
