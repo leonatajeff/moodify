@@ -1,7 +1,14 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 10%;
+}
+
 .navbar {
+  display: flex;
   margin-top: 102px;
   border-radius: 36px;
-  padding: 20px;
   background: #312d2b;
   opacity: 70%;
   color: #fff;
@@ -9,15 +16,55 @@
   text-decoration: none;
   margin-left: 20%;
   margin-right: 20%;
+  padding: 5px;
+}
+
+.navbar-text {
+  padding-top: 10px;
+}
+
+.donate-nav {
+  width: 100vh;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.donate-nav-button {
+  background: #4c4846;
+  border-radius: 36px;
+  padding: 10px 22px 10px 22px;
+}
+
+.donate {
+  padding-top: 164px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 670px;
+  text-align: center;
+}
+
+.donate-btn {
+  font: bold 11px;
+  font-weight: 700;
+  text-decoration: none;
+  background-color: #1ed760;
+  color: white;
+  border-radius: 10px;
+  height: 41px;
+  align-items: center;
+  border: none;
+  margin-top: 22px;
+  padding: 0 22px 0 22px;
 }
 
 .moodify-header {
-  font-style: normal;
-  font-weight: 900;
-  font-size: 96px;
-  line-height: 135px;
-  text-transform: uppercase;
+  max-width: 670px;
+  height: 98px;
+  padding-top: 164px;
+  font-size: 36px;
   margin: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .moodify-subheader {
@@ -31,8 +78,8 @@
   font-weight: 700;
   text-decoration: none;
   background-color: #1ed760;
-  color: #191414;
-  border-radius: 24px;
+  color: white;
+  border-radius: 10px;
   height: 41px;
   top: 454px;
   align-items: center;
@@ -50,11 +97,11 @@
   text-decoration: none;
   background-color: #248aff;
   color: white;
-  border-radius: 24px;
+  border-radius: 10px;
   height: 41px;
   align-items: center;
   border: none;
-  margin-top: 70px;
+  margin-top: 22px;
 }
 
 .code-text {
@@ -67,8 +114,25 @@
 }
 
 .about {
+  padding-top: 164px;
   position: relative;
   text-align: center;
+  max-width: 900px;
+  max-height: 230px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-header {
+  font-size: 36px;
+  font-family: "CircularSpotifyText-Medium", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.about-description {
+  font-size: 24px;
+  font-family: "CircularSpotifyText-Light", -apple-system, BlinkMacSystemFont;
 }
 
 .community {

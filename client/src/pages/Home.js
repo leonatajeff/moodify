@@ -13,15 +13,15 @@ export default function Home() {
 
   return (
     <div className="generation">
-      <h1 className="moodify-header"> Moodify</h1>
-      <h2 className="moodify-subheader">
-        What if you can see your favorite sounds?
-      </h2>
+      <h1 className="moodify-header">
+        {" "}
+        Moodify, visualize your listening history with Artifical Intelligence{" "}
+      </h1>
       {code ? (
         <Result />
       ) : (
         <button className="spotify-button" onClick={handleLogin}>
-          <text className="login-text"> LOGIN WITH SPOTIFY </text>
+          <text className="login-text"> Login with Spotify </text>
         </button>
       )}
     </div>
