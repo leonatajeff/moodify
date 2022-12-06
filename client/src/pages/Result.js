@@ -2,7 +2,8 @@ import "./css/Result.css";
 import { useState } from "react";
 import axios from "axios";
 import { saveAs } from "file-saver";
-import { JellyTriangle } from '@uiball/loaders'
+import { JellyTriangle } from '@uiball/loaders';
+import { TypeAnimation } from 'react-type-animation';
 import {
   TwitterShareButton,
   TwitterIcon,
@@ -15,7 +16,6 @@ import {
 export default function Result(url) {
   const [isLoading, setIsLoading] = useState(true);
   const [imageUrl, setImageUrl] = useState("");
-  const [displaySentence, setDisplaySentence] = useState("");
 
   async function generateImage() {
     const code = new URLSearchParams(window.location.search).get("code");
@@ -27,8 +27,6 @@ export default function Result(url) {
       .get("/api/getImage")
       .then((Response) => setImageUrl(Response.data));
 
-    console.log(displaySentence);
-    setDisplaySentence("Your music has been surreal and emotional");
     setIsLoading(false);
   }
 
@@ -40,28 +38,41 @@ export default function Result(url) {
   if (isLoading) {
     generateImage();
     return (
-      <div className="result">
-        <h1> Generating your mood... </h1>
+      <div className="result" style={{marginTop: "164px"}}>
         <JellyTriangle 
           size={60}
           speed={1.75} 
           color="white" 
+        />
+        <TypeAnimation
+            sequence={[
+                'Generating visuals... Please wait...', // Types 'One'
+                100, // Waits 1s
+                () => {
+                console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                }
+            ]}
+            wrapper="div"
+            cursor={true}
+            repeat={Infinity}
+            style={{ fontSize: '2em', marginTop: '10px'}}
         />
       </div>
     )
   } else {
     return (
       <div className="result">
+        <h1> Your recent songs visualized! </h1>
         <img
           style={{ width: 512, height: 512 }}
           src={imageUrl}
           alt="Your mood!"
         />
-        <h1> Your music has been surreal and emotional </h1>
         <div className="share-container">
           <text className="share-message">
             {" "}
-            Share your mood with your friends!{" "}
+            Share your mood with your friends!
+            {" "}
           </text>
           <button className="share-button" onClick={downloadImage}>
             Download your image as a JPG

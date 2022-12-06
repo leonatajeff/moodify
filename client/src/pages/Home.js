@@ -13,16 +13,19 @@ export default function Home() {
 
   return (
     <div className="generation">
-      <h1 className="moodify-header">
-        {" "}
-        Moodify, visualize your listening history with Artifical Intelligence{" "}
-      </h1>
       {code ? (
         <Result />
       ) : (
-        <button className="spotify-button" onClick={handleLogin}>
-          <text className="login-text"> Login with Spotify </text>
-        </button>
+        <div>
+                  <h1 className="moodify-header">
+        {" "}
+        Moodify, visualize your listening history with Artifical Intelligence.
+        {" "}
+      </h1>
+            <button className="spotify-button" onClick={handleLogin}>
+                <text className="login-text"> Login with Spotify </text>
+            </button>
+        </div>
       )}
     </div>
   );

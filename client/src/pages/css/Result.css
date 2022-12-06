@@ -11,6 +11,7 @@
 
 .share-container {
   display: inline-grid;
+  margin-top: 20px;
 }
 
 .share-message {

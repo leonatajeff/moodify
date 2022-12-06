@@ -5,6 +5,12 @@ header {
   padding: 30px 10%;
 }
 
+.active {
+    color: white;
+    font-family: "CircularSpotifyText-Black";
+    font-weight: 900;
+}
+
 .navbar {
   display: flex;
   margin-top: 102px;

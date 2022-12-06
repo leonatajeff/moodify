@@ -5,9 +5,9 @@ export default function Navbar() {
   return (
     <div className="navbar">
       <div className="navbar-text">
-        <NavLink to="/" activeStyle={{ color:'white' }}>Home</NavLink>
-        <NavLink to="/About" activeStyle={{ color:'white' }}>About</NavLink>
-        <NavLink to="/Community" activeStyle={{ color:'white' }}>Community</NavLink>
+        <NavLink to="/" end>Home</NavLink>
+        <NavLink to="/About" >About</NavLink>
+        <NavLink to="/Community" >Community</NavLink>
       </div>
       <div className="donate-nav">
         <NavLink className="donate-nav-button" to="/Donate">
