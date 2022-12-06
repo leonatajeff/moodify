@@ -2,6 +2,7 @@ import "./css/Result.css";
 import { useState } from "react";
 import axios from "axios";
 import { saveAs } from "file-saver";
+import { JellyTriangle } from '@uiball/loaders'
 import {
   TwitterShareButton,
   TwitterIcon,
@@ -38,6 +39,16 @@ export default function Result(url) {
 
   if (isLoading) {
     generateImage();
+    return (
+      <div className="result">
+        <h1> Generating your mood... </h1>
+        <JellyTriangle 
+          size={60}
+          speed={1.75} 
+          color="white" 
+        />
+      </div>
+    )
   } else {
     return (
       <div className="result">
