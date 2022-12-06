@@ -12,7 +12,7 @@ CLIENT_ID="aaf84179409a48649643d1dca7021d77"
 CLIENT_SECRET="c1432d11a176489194f6eb767172be9e"
 openai.api_key = "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"
 REDIRECT_URI="https://8080-cs-184908628077-default.cs-us-east1-vpcf.cloudshell.dev/"
-PERMISSIONS="user-library-read user-read-recently-played user-read-playback-state"
+PERMISSIONS="user-library-read user-read-recently-played user-read-playback-state user-read-private"
 app.config.update(SECRET_KEY=CLIENT_SECRET)
 
 
@@ -62,7 +62,7 @@ def fetchImages():
 @app.route('/api/userImages')
 def fetchUserImages():
     # Retrieving data for past moods page
-    username = 'testuser'
+    
     # retrieve username from spotify api and send it in 
     try:
         token_info = check_token()
@@ -71,7 +71,7 @@ def fetchUserImages():
         return redirect('/')
     sp = spotipy.Spotify(auth=token_info['access_token'])
     results = sp.me()
-    username = results['username'] # not sure if this is the right attribute I have to see what this returns
+    username = results['id'] # not sure if this is the right attribute I have to see what this returns
     return databaseManager.getUserImages(username)
 
 @app.route('/api/getPrompt', methods=['GET'])
