@@ -71,7 +71,7 @@ def fetchUserImages():
         return redirect('/')
     sp = spotipy.Spotify(auth=token_info['access_token'])
     results = sp.me()
-    username = results['display_name'] # not sure if this is the right attribute I have to see what this returns
+    username = results['id'] # not sure if this is the right attribute I have to see what this returns
     return databaseManager.getUserImages(username)
 
 @app.route('/api/getPrompt', methods=['GET'])
