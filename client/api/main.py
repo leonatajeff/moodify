@@ -8,9 +8,9 @@ import databaseManager
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
 
-CLIENT_ID="aaf84179409a48649643d1dca7021d77"
-CLIENT_SECRET="c1432d11a176489194f6eb767172be9e"
-openai.api_key = "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"
+CLIENT_ID=""
+CLIENT_SECRET=""
+openai.api_key = ""
 REDIRECT_URI="https://8080-cs-184908628077-default.cs-us-east1-vpcf.cloudshell.dev/"
 PERMISSIONS="user-library-read user-read-recently-played user-read-playback-state user-read-private"
 app.config.update(SECRET_KEY=CLIENT_SECRET)
