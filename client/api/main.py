@@ -59,7 +59,7 @@ def fetchImages():
     # Retrieving data
     return databaseManager.getImages()  
 
-@app.route('api/userImages')
+@app.route('/api/userImages')
 def fetchUserImages():
     # Retrieving data for past moods page
     
