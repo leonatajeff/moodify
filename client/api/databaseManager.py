@@ -82,4 +82,29 @@ def getImages():
       'imagePath' : imageList
     })
 
+def getUserImages(username):
+    # Retrieving data
+    datastoreClient = get_datastore_client()
+    
+    query = datastoreClient.query(kind = "SpotifyUser")
+    #basically just fetches every user entity, note we can use limit = n in the query.fetch() 
+    #                                   call to set a cap on how many images we display
+    query.add_filter("username", "=", username)
+
+    results = list(query.fetch())
+    imageList = []
+
+    for user in results:
+        imageList.append(user["imagePath"])
+    
+    ## we will probably have to add more here for whatever other info we want to display
+    # maybe another list with prompts, maybe another with favorite genres, etc. 
+    
+    return jsonify({
+      'imagePath' : imageList
+    })
+
+
+
+
 
