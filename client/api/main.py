@@ -62,8 +62,12 @@ def fetchImages():
 @app.route('/api/userImages')
 def fetchUserImages():
     # Retrieving data for past moods page
-    
+
     # retrieve username from spotify api and send it in 
+    username = get_username()
+    return databaseManager.getUserImages(username)
+
+def get_username():
     try:
         token_info = check_token()
     except:
@@ -71,8 +75,7 @@ def fetchUserImages():
         return redirect('/')
     sp = spotipy.Spotify(auth=token_info['access_token'])
     results = sp.me()
-    username = results['id'] # not sure if this is the right attribute I have to see what this returns
-    return databaseManager.getUserImages(username)
+    return results['id'] # not sure if this is the right attribute I have to see what this returns
 
 @app.route('/api/getPrompt', methods=['GET'])
 def get_prompt():
@@ -125,6 +128,10 @@ def get_image():
 
     ## I'm pretty sure this is where we will want to upload the user information since we have the prompt and the image url here
     ## upload data with database manager - databaseManager.upload(username, favGenre, prompt, imageUrl)
+    
+    username = get_username()
+    databaseManager.upload(username, prompt, image_url)
+    
     return image_url
    
 def check_token():
