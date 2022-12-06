@@ -59,6 +59,21 @@ def fetchImages():
     # Retrieving data
     return databaseManager.getImages()  
 
+@app.route('api/userImages')
+def fetchUserImages():
+    # Retrieving data for past moods page
+    username = 'testuser'
+    # retrieve username from spotify api and send it in 
+    try:
+        token_info = check_token()
+    except:
+        print('user not logged in')
+        return redirect('/')
+    sp = spotipy.Spotify(auth=token_info['access_token'])
+    results = sp.me()
+    username = results['username'] # not sure if this is the right attribute I have to see what this returns
+    return databaseManager.getUserImages(username)
+
 @app.route('/api/getPrompt', methods=['GET'])
 def get_prompt():
     '''
