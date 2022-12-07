@@ -37,23 +37,6 @@ def register_token():
     session['token_info'] = token_info
     return token_info
 
-@app.route('/api/uploadTest')
-def uploadImages():
-    # this code will probably end up being injected into our image generation chunk, but i'll just throw it here for now
-
-    # uploads an image from a url - which is how we retrieve the generated image from the API
-
-    # dummy data for demonstration purposes - we will get this data from the spotify api
-    username = "testuser1"
-    favGenre = 'rock'
-    prompt = 'beach house space song'
-    imageUrl = 'https://cdn.discordapp.com/attachments/1024113488483864669/1033931366573805568/unknown.png'
-    
-        
-    # NOTE: upload code will be moved to the image generation route of the api
-
-    databaseManager.upload(username, favGenre, prompt, imageUrl)
-
 @app.route('/api/images')
 def fetchImages():
     # Retrieving data
