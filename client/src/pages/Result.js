@@ -29,6 +29,7 @@ export default function Result() {
       code: code,
     };
     await axios.post("/api/registerToken", responseCode);
+    await fetchUserImages();
     return await axios
       .get("/api/getImage")
       .then((Response) => Response.data);
@@ -117,6 +118,10 @@ export default function Result() {
               <PinterestIcon size={32} round={true} />
             </PinterestShareButton>
           </div>
+          {images?.length > 0 ? <div className="past-moods-container">
+                <text className="past-moods-header"> Past moods </text>
+                <Gallery images={images} enableImageSelection={false} />
+            </div> : ""}
         </div>
       </div>
     );

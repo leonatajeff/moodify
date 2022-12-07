@@ -24,6 +24,7 @@
     "start": "react-scripts start",
     "start-api": "cd api && flask run --no-debugger",
     "gbuild": "npm run build && rm -r api/build && cp -r build api/build",
+    "gdeploy": "npm run gbuild && cd api && dev_appserver.py app.yaml",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
