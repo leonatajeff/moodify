@@ -18,9 +18,7 @@ import {
 export default function Result() {
   const [isLoading, setIsLoading] = useState(true);
   const [imageUrl, setImageUrl] = useState("");
-  const [images, setImages] = useState(() => {
-    return fetchUserImages();
-  });
+  const [images, setImages] = useState(null);
 
   async function generateImage() {
     const code = new URLSearchParams(window.location.search).get("code");
@@ -32,7 +30,7 @@ export default function Result() {
       .get("/api/getImage")
       .then((Response) => setImageUrl(Response.data));
 
-    setIsLoading(false);
+    fetchUserImages();
   }
 
   async function fetchUserImages() {
@@ -49,6 +47,7 @@ export default function Result() {
     }
     console.log(imageData);
     setImages(imageData);
+    setIsLoading(false);
   }
 
   const downloadImage = () => {
@@ -116,14 +115,10 @@ export default function Result() {
               <PinterestIcon size={32} round={true} />
             </PinterestShareButton>
           </div>
-          {images.length > 0 ? (
-            <div className="past-moods-container">
-              <text className="past-moods-header"> Past moods </text>
-              <Gallery images={images} enableImageSelection={false} />
-            </div>
-          ) : (
-              ''
-          )}
+            {images.length > 0 ? <div className="past-moods-container">
+                <text className="past-moods-header"> Past moods </text>
+                <Gallery images={images} enableImageSelection={false} />
+            </div> : ""}
         </div>
       </div>
     );

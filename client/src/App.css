@@ -25,6 +25,10 @@ header {
   padding: 5px;
 }
 
+.gallery-grid {
+    max-width: 920px;    
+}
+
 .navbar-text {
   padding-top: 10px;
 }
@@ -142,10 +146,9 @@ header {
 }
 
 .community {
-  position: relative;
+  display: grid;
   text-align: center;
-  margin-left: 20%;
-  margin-right: 20%;
+  justify-content: center;
 }
 
 .community-header {
