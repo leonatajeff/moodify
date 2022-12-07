@@ -6,9 +6,9 @@ header {
 }
 
 .active {
-    color: white;
-    font-family: "CircularSpotifyText-Black";
-    font-weight: 900;
+  color: white;
+  font-family: "CircularSpotifyText-Black";
+  font-weight: 900;
 }
 
 .navbar {

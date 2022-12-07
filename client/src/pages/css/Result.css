@@ -30,6 +30,9 @@
   align-items: center;
   border: none;
   padding: 0 22px 0 22px;
+  max-width: 512px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .social-container {
@@ -37,9 +40,19 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 22px;
 }
 
 .social-icon {
   margin: 0 5px 0 5px;
+}
+
+.past-moods-container {
+    margin-top: 20px;
+    max-width: 736px;
+}
+
+.past-moods-header {
+  font-family: "CircularSpotifyText-Medium", -apple-system, BlinkMacSystemFont;
+  font-size: 1.8em;
 }

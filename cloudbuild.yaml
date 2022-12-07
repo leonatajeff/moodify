@@ -1,17 +1,21 @@
 steps:
-- name: python:slim
-  entrypoint: 'python'
-  args: ['main.py']
-  secretEnv: ['CLIENT_ID', 'CLIENT_SECRET', 'OPEN_AI_SECRET']
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: 'bash'
-  args: ['-c', 'gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy']
-timeout: '1600s'
+  - name: python:slim
+    entrypoint: "python"
+    args: ["main.py"]
+    secretEnv: ["CLIENT_ID", "CLIENT_SECRET", "OPEN_AI_SECRET"]
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "bash"
+    args:
+      [
+        "-c",
+        "gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy",
+      ]
+timeout: "1600s"
 availableSecrets:
   secretManager:
-  - versionName: projects/cs1520moodify/secrets/moodify-spotify-client-id/versions/1
-    env: 'CLIENT_ID'
-  - versionName: projects/cs1520moodify/secrets/moodify-spotify-secret/versions/1
-    env: 'CLIENT_SECRET'
-  - versionName: projects/cs1520moodify/secrets/moodify-openai/versions/1
-    env: 'OPEN_AI_SECRET'
+    - versionName: projects/cs1520moodify/secrets/moodify-spotify-client-id/versions/1
+      env: "CLIENT_ID"
+    - versionName: projects/cs1520moodify/secrets/moodify-spotify-secret/versions/1
+      env: "CLIENT_SECRET"
+    - versionName: projects/cs1520moodify/secrets/moodify-openai/versions/1
+      env: "OPEN_AI_SECRET"

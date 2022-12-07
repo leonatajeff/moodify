@@ -17,14 +17,14 @@ export default function Home() {
         <Result />
       ) : (
         <div>
-                  <h1 className="moodify-header">
-        {" "}
-        Moodify, visualize your listening history with Artifical Intelligence.
-        {" "}
-      </h1>
-            <button className="spotify-button" onClick={handleLogin}>
-                <text className="login-text"> Login with Spotify </text>
-            </button>
+          <h1 className="moodify-header">
+            {" "}
+            Moodify, visualize your listening history with Artifical
+            Intelligence.{" "}
+          </h1>
+          <button className="spotify-button" onClick={handleLogin}>
+            <text className="login-text"> Login with Spotify </text>
+          </button>
         </div>
       )}
     </div>

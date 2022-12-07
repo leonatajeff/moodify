@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start-api": "cd api && flask run --no-debugger",
-    "create-deployable": "npm run build && rm -r api/build && cp -r build api/build",
+    "gbuild": "npm run build && rm -r api/build && cp -r build api/build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
