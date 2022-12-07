@@ -13,7 +13,7 @@ import {
   PinterestIcon,
 } from "react-share";
 
-export default function Result(url) {
+export default function Result() {
   const [isLoading, setIsLoading] = useState(true);
   const [imageUrl, setImageUrl] = useState("");
 
@@ -46,8 +46,8 @@ export default function Result(url) {
         />
         <TypeAnimation
             sequence={[
-                'Generating visuals... Please wait...', // Types 'One'
-                100, // Waits 1s
+                'Generating visuals.....', // Types 'One'
+                1000, // Waits 1s
                 () => {
                 console.log('Done typing!'); // Place optional callbacks anywhere in the array
                 }

@@ -30,7 +30,6 @@ export default function Community() {
   return (
     <div className="community">
       <h2 className="community-header">Check out how others are feeling!</h2>
-      <br />
       {isLoading ? (
         <div className="spinner-container">
           <div className="loading-spinner"></div>
