@@ -5,6 +5,7 @@ from werkzeug.datastructures import FileStorage
 from PIL import Image
 from io import BytesIO
 from flask import jsonify
+import random
 
 def get_datastore_client():
     return datastore.Client()
@@ -27,20 +28,19 @@ def get_storage_client():
 # client.put(spotifyuser)
 
 
-def upload(username, favGenre, prompt, imageUrl):
+def upload(username, prompt, imageUrl):
     # set the datastore and the storage clients
     datastoreClient = get_datastore_client()
     storageClient = get_storage_client()
 
     # uploading to datastore
-    newkey = datastoreClient.key('SpotifyUser', username)
+    newkey = datastoreClient.key('SpotifyUser')
     spotifyUser = datastore.Entity(key = newkey)
 
-    imageName = str(newkey.id)
+    imageName = str(random.randint(0, 1000000))
 
     spotifyUser['username'] = username
     spotifyUser['imagePath'] = '/images/' + imageName + '.png'
-    spotifyUser['favGenre'] = favGenre
     spotifyUser['prompt'] = prompt
     datastoreClient.put(spotifyUser)
 
@@ -103,8 +103,3 @@ def getUserImages(username):
     return jsonify({
       'imagePath' : imageList
     })
-
-
-
-
-
