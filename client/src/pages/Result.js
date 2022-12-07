@@ -5,6 +5,7 @@ import { saveAs } from "file-saver";
 import { JellyTriangle } from "@uiball/loaders";
 import { TypeAnimation } from "react-type-animation";
 import { Gallery } from "react-grid-gallery";
+import { useQuery } from 'react-query';
 
 import {
   TwitterShareButton,
@@ -16,21 +17,23 @@ import {
 } from "react-share";
 
 export default function Result() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [imageUrl, setImageUrl] = useState("");
   const [images, setImages] = useState(null);
 
-  async function generateImage() {
+  const { isLoading, error, data } = useQuery(
+    'imageData', () => fetchImage()
+  );
+
+  async function fetchImage() {
     const code = new URLSearchParams(window.location.search).get("code");
     let responseCode = {
       code: code,
     };
     await axios.post("/api/registerToken", responseCode);
-    await axios
+    await fetchUserImages();
+    return await axios
       .get("/api/getImage")
-      .then((Response) => setImageUrl(Response.data));
-
-    fetchUserImages();
+      .then((Response) => Response.data);
+    
   }
 
   async function fetchUserImages() {
@@ -46,17 +49,17 @@ export default function Result() {
       imageData.push({ src: fullUrl });
     }
     console.log(imageData);
-    setImages(imageData);
-    setIsLoading(false);
+    setImages(imageData);    
   }
 
   const downloadImage = () => {
-    saveAs(imageUrl, "image.jpg"); // Put your image url here.
+    saveAs(data, "image.jpg"); // Put your image url here.
     console.log("Image downloaded");
   };
 
+  if (error) return 'An error has occurred: ' + error.message
+
   if (isLoading) {
-    generateImage();
     return (
       <div className="result" style={{ marginTop: "164px" }}>
         <JellyTriangle size={60} speed={1.75} color="white" />
@@ -81,7 +84,7 @@ export default function Result() {
         <h1> Your recent songs visualized! </h1>
         <img
           style={{ width: 512, height: 512 }}
-          src={imageUrl}
+          src={data}
           alt="Your mood!"
         />
         <div className="share-container">
@@ -95,27 +98,27 @@ export default function Result() {
           <div className="social-container">
             <TwitterShareButton
               className="social-icon"
-              url={imageUrl}
+              url={data}
               title="Check out my mood!"
             >
               <TwitterIcon size={32} round={true} />
             </TwitterShareButton>
             <RedditShareButton
               className="social-icon"
-              url={imageUrl}
+              url={data}
               title="Check out my mood!"
             >
               <RedditIcon size={32} round={true} />
             </RedditShareButton>
             <PinterestShareButton
               className="social-icon"
-              url={imageUrl}
+              url={data}
               title="Check out my mood!"
             >
               <PinterestIcon size={32} round={true} />
             </PinterestShareButton>
           </div>
-            {images.length > 0 ? <div className="past-moods-container">
+          {images?.length > 0 ? <div className="past-moods-container">
                 <text className="past-moods-header"> Past moods </text>
                 <Gallery images={images} enableImageSelection={false} />
             </div> : ""}
